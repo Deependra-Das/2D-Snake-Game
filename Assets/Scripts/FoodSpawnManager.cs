@@ -5,37 +5,37 @@ using UnityEngine;
 
 public class FoodSpawnManager : MonoBehaviour
 {
-    public BoxCollider2D spawnArea;
-    public FoodItem[] foodList;
+    public BoxCollider2D foodSpawnArea;
     bool isSpawning = false;
     public int minSpawnTime = 2;
     public int maxSpawnTime = 5;
+    public FoodItem[] foodList;
 
     void Update()
     {
         if (!isSpawning)
         {
             isSpawning = true;
-            StartCoroutine(SpawnObject(UnityEngine.Random.Range(minSpawnTime, maxSpawnTime)));
+            StartCoroutine(SpawnFood(UnityEngine.Random.Range(minSpawnTime, maxSpawnTime)));
         }
     }
 
-    IEnumerator SpawnObject(float seconds)
+    IEnumerator SpawnFood(float seconds)
     {
         Debug.Log("Waiting for " + seconds + " seconds");
 
         yield return new WaitForSeconds(seconds);
 
         FoodType foodType = (FoodType)UnityEngine.Random.Range(0, 2);
-        FoodItem foodPrefab = GetFoodItem(foodType);
+        FoodItem foodItem = GetFoodItem(foodType);
 
-        if (foodPrefab != null)
+        if (foodItem != null)
         {
             Vector3 spawnPosition = getRandomPosition();
 
-            GameObject food = Instantiate(foodPrefab.foodPrefab, spawnPosition, Quaternion.identity, transform);
+            GameObject food = Instantiate(foodItem.foodPrefab, spawnPosition, Quaternion.identity, transform);
 
-            Destroy(food, foodPrefab.foodLifeTime);
+            Destroy(food, foodItem.foodLifeTime);
         }
 
         isSpawning = false;
@@ -43,7 +43,7 @@ public class FoodSpawnManager : MonoBehaviour
 
     private Vector3 getRandomPosition()
     {
-        Bounds bounds = spawnArea.bounds;
+        Bounds bounds = foodSpawnArea.bounds;
 
         float xPos = UnityEngine.Random.Range(bounds.min.x, bounds.max.x);
         float yPos = UnityEngine.Random.Range(bounds.min.y, bounds.max.y);
@@ -68,7 +68,7 @@ public class FoodItem
 {
     public FoodType foodType;
     public GameObject foodPrefab;
-    public int changeinLength = 0;
+    public int changeInLength = 0;
     public int pointsScored = 0;
     public float foodLifeTime = 5f;
 }
