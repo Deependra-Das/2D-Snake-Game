@@ -207,6 +207,90 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &542024096
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 542024099}
+  - component: {fileID: 542024098}
+  - component: {fileID: 542024100}
+  m_Layer: 0
+  m_Name: PowerupSpawnArea
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!61 &542024098
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542024096}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 46, y: 22}
+  m_EdgeRadius: 0
+--- !u!4 &542024099
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542024096}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &542024100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 542024096}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2960f628a563a5541ab0c18a27e1e248, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  powerupSpawnArea: {fileID: 542024098}
+  minSpawnTime: 2
+  maxSpawnTime: 5
+  powerupList:
+  - powerupType: 0
+    powerupPrefab: {fileID: 5188033300378708304, guid: 324700dfe9d5fc24d884f59b2280ab52, type: 3}
+    powerupLifeTime: 3
+  - powerupType: 1
+    powerupPrefab: {fileID: 5188033300378708304, guid: d4712ea62ee0fb14b9049c7bb941f09b, type: 3}
+    powerupLifeTime: 3
+  - powerupType: 2
+    powerupPrefab: {fileID: 5188033300378708304, guid: 48d3d13939dfa9b4eb8dc4c750a1f8ab, type: 3}
+    powerupLifeTime: 3
 --- !u!1 &1319598217
 GameObject:
   m_ObjectHideFlags: 0
@@ -365,7 +449,7 @@ GameObject:
   - component: {fileID: 1608003656}
   - component: {fileID: 1608003657}
   m_Layer: 0
-  m_Name: SpawnArea
+  m_Name: FoodSpawnArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -424,13 +508,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00678425f852b264cb1227de6c9a4648, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spawnArea: {fileID: 1608003656}
+  foodSpawnArea: {fileID: 1608003656}
+  minSpawnTime: 2
+  maxSpawnTime: 5
   foodList:
   - foodType: 0
     foodPrefab: {fileID: 5188033300378708304, guid: ac90dabf53461644c81a2a59550a8c1e, type: 3}
-    Length: 0
+    changeInLength: 0
+    pointsScored: 0
     foodLifeTime: 5
   - foodType: 1
     foodPrefab: {fileID: 5188033300378708304, guid: d2f7db3f166e8e044ab50534c5376f41, type: 3}
-    Length: 0
+    changeInLength: 0
+    pointsScored: 0
     foodLifeTime: 5
