@@ -6,7 +6,9 @@ using UnityEngine;
 
 public class SnakeController : MonoBehaviour
 {
-   
+    [SerializeField] 
+    SnakeID snakeID;
+
     private Vector2 moveDirection;
     private float moveTimer;
     private float moveTimerMax;
@@ -51,22 +53,45 @@ public class SnakeController : MonoBehaviour
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.W) && moveDirection != Vector2.down)
+        if(snakeID==SnakeID.SNAKE_P1)
         {
-            moveDirection = Vector2.up;
+            if (Input.GetKeyDown(KeyCode.W) && moveDirection != Vector2.down)
+            {
+                moveDirection = Vector2.up;
+            }
+            if (Input.GetKeyDown(KeyCode.S) && moveDirection != Vector2.up)
+            {
+                moveDirection = Vector2.down;
+            }
+            if (Input.GetKeyDown(KeyCode.A) && moveDirection != Vector2.right)
+            {
+                moveDirection = Vector2.left;
+            }
+            if (Input.GetKeyDown(KeyCode.D) && moveDirection != Vector2.left)
+            {
+                moveDirection = Vector2.right;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.S) && moveDirection != Vector2.up)
+        if (snakeID == SnakeID.SNAKE_P2)
         {
-            moveDirection = Vector2.down;
+            if (Input.GetKeyDown(KeyCode.UpArrow) && moveDirection != Vector2.down)
+            {
+                moveDirection = Vector2.up;
+            }
+            if (Input.GetKeyDown(KeyCode.DownArrow) && moveDirection != Vector2.up)
+            {
+                moveDirection = Vector2.down;
+            }
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && moveDirection != Vector2.right)
+            {
+                moveDirection = Vector2.left;
+            }
+            if (Input.GetKeyDown(KeyCode.RightArrow) && moveDirection != Vector2.left)
+            {
+                moveDirection = Vector2.right;
+            }
         }
-        if (Input.GetKeyDown(KeyCode.A) && moveDirection != Vector2.right) 
-        {
-            moveDirection = Vector2.left;
-        }
-        if (Input.GetKeyDown(KeyCode.D) && moveDirection != Vector2.left)
-        {
-            moveDirection = Vector2.right;
-        }
+
     }
 
     private void FixedUpdate()
@@ -147,7 +172,7 @@ public class SnakeController : MonoBehaviour
                 foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassBurnerFood);
 
                 ReduceSnakeSize(foodItem.changeInLength);
-                gameUIManagerObject.UpdateScore(foodItem.pointsScored);
+                gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored);
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
@@ -157,11 +182,11 @@ public class SnakeController : MonoBehaviour
 
                 if (isScoreMultiplierActive)
                 {
-                    gameUIManagerObject.UpdateScore(foodItem.pointsScored * ScoreMultiplier);
+                    gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored * ScoreMultiplier);
                 }
                 else 
                 {
-                    gameUIManagerObject.UpdateScore(foodItem.pointsScored);
+                    gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored);
                 }
             
             }
@@ -262,4 +287,10 @@ public class SnakeController : MonoBehaviour
     {
         return isSpeedBoostActive;
     }
+}
+
+public enum SnakeID
+{
+    SNAKE_P1,
+    SNAKE_P2
 }
