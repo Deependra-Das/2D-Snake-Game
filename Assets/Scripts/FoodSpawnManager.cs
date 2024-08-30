@@ -80,15 +80,15 @@ public class FoodSpawnManager : MonoBehaviour
         return null;
     }
 
-    public int GetFoodPoints(FoodType foodType)
-    {
-        FoodItem item = Array.Find(foodList, item => item.foodType == foodType);
-        if (item != null)
-        {
-            return item.pointsScored;
-        }
-        return 0;
-    }
+    //public int GetFoodPoints(FoodType foodType)
+    //{
+    //    FoodItem item = Array.Find(foodList, item => item.foodType == foodType);
+    //    if (item != null)
+    //    {
+    //        return item.pointsScored;
+    //    }
+    //    return 0;
+    //}
 
 
 }

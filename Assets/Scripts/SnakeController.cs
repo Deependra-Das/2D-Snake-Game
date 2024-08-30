@@ -26,6 +26,9 @@ public class SnakeController : MonoBehaviour
     [SerializeField]
     private float SpeedMultiplier;
 
+    [SerializeField]
+    private int ScoreMultiplier;
+
     private List<Transform> snakeSegmentList;
     public Transform snakeSegmentPrefab;
 
@@ -94,11 +97,11 @@ public class SnakeController : MonoBehaviour
 
         if (snakeHeadPosition.x > bounds.max.x)
         {
-            snakeHeadPosition.x = bounds.min.x+1;
+            snakeHeadPosition.x = bounds.min.x;
         }
         else if (snakeHeadPosition.x < bounds.min.x)
         {
-            snakeHeadPosition.x = bounds.max.x-1;
+            snakeHeadPosition.x = bounds.max.x;
         }
 
         if (snakeHeadPosition.y > bounds.max.y)
@@ -138,41 +141,60 @@ public class SnakeController : MonoBehaviour
     {
         if (colliderFoodObject.gameObject.GetComponent<FoodController>() != null)
         {
+            FoodItem foodItem;
             if(colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType()==FoodType.MassBurnerFood)
             {
-                ReduceSnakeSize();
-                gameUIManagerObject.IncreaseScore(FoodSpawnManager.Instance.GetFoodPoints(FoodType.MassBurnerFood));
+                foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassBurnerFood);
+
+                ReduceSnakeSize(foodItem.changeInLength);
+                gameUIManagerObject.UpdateScore(foodItem.pointsScored);
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
-                GrowSnakeSize();
-                gameUIManagerObject.IncreaseScore(FoodSpawnManager.Instance.GetFoodPoints(FoodType.MassGainerFood));
+                foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassGainerFood);
+
+                GrowSnakeSize(foodItem.changeInLength);
+
+                if (isScoreMultiplierActive)
+                {
+                    gameUIManagerObject.UpdateScore(foodItem.pointsScored * ScoreMultiplier);
+                }
+                else 
+                {
+                    gameUIManagerObject.UpdateScore(foodItem.pointsScored);
+                }
+            
             }
         }
 
     }
 
 
-    private void GrowSnakeSize()
+    private void GrowSnakeSize(int length)
     {
-    Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab);
-    newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
-
-    snakeSegmentList.Add(newSnakeSegment);
-
-    }
-
-    private void ReduceSnakeSize()
+        for (int i = 0; i < length; i++)
         {
-        if (snakeSegmentList.Count > 1)
-        { 
-        Transform lastBodyPart = snakeSegmentList[snakeSegmentList.Count - 1];
-        snakeSegmentList.RemoveAt(snakeSegmentList.Count - 1);
+            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab);
+            newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
 
-        Destroy(lastBodyPart.gameObject);
+            snakeSegmentList.Add(newSnakeSegment);
         }
 
     }
+
+    private void ReduceSnakeSize(int length)
+    {
+        if (snakeSegmentList.Count > 1)
+        {
+            for (int i = 0; i < length; i++)
+            {
+                Transform lastBodyPart = snakeSegmentList[snakeSegmentList.Count - 1];
+                snakeSegmentList.RemoveAt(snakeSegmentList.Count - 1);
+                Destroy(lastBodyPart.gameObject);
+            }
+        }
+    }
+
 
     private void HandleCollisionWithPowerup(Collider2D colliderPowerupObject)
     {

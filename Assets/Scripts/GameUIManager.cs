@@ -15,7 +15,7 @@ public class GameUIManager : MonoBehaviour
 
     public CanvasRenderer[] ActivePowerupImageList;
 
-    public void IncreaseScore(int scoreIncrementValue)
+    public void UpdateScore(int scoreIncrementValue)
     {
         scoreValue += scoreIncrementValue;
         RefreshUI();
