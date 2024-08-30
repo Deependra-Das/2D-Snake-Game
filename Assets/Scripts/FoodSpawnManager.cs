@@ -42,7 +42,6 @@ public class FoodSpawnManager : MonoBehaviour
 
     IEnumerator SpawnFood(float seconds)
     {
-        Debug.Log("Waiting for " + seconds + " seconds");
 
         yield return new WaitForSeconds(seconds);
 
@@ -71,7 +70,7 @@ public class FoodSpawnManager : MonoBehaviour
         return new Vector3(Mathf.Round(xPos),Mathf.Round(yPos), 0.0f);
     }
 
-    private FoodItem GetFoodItem(FoodType foodType)
+    public FoodItem GetFoodItem(FoodType foodType)
     {
         FoodItem item = Array.Find(foodList, item => item.foodType == foodType);
         if(item!=null)
@@ -79,6 +78,16 @@ public class FoodSpawnManager : MonoBehaviour
             return item;
         }
         return null;
+    }
+
+    public int GetFoodPoints(FoodType foodType)
+    {
+        FoodItem item = Array.Find(foodList, item => item.foodType == foodType);
+        if (item != null)
+        {
+            return item.pointsScored;
+        }
+        return 0;
     }
 
 

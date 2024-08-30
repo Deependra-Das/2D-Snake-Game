@@ -29,6 +29,9 @@ public class SnakeController : MonoBehaviour
     private List<Transform> snakeSegmentList;
     public Transform snakeSegmentPrefab;
 
+    [SerializeField]
+    private GameUIManager gameUIManagerObject;
+
     private void Awake()
     {
         //moveDirection=Vector2.right;
@@ -108,10 +111,12 @@ public class SnakeController : MonoBehaviour
             if(colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType()==FoodType.MassBurnerFood)
             {
                 ReduceSnakeSize();
+                gameUIManagerObject.IncreaseScore(FoodSpawnManager.Instance.GetFoodPoints(FoodType.MassBurnerFood));
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
                 GrowSnakeSize();
+                gameUIManagerObject.IncreaseScore(FoodSpawnManager.Instance.GetFoodPoints(FoodType.MassGainerFood));
             }
         }
 
@@ -185,8 +190,24 @@ public class SnakeController : MonoBehaviour
         moveTimerMax /= SpeedMultiplier;
         Debug.Log("Speed Boost Activated");
         yield return new WaitForSeconds(powerupCooldownTimer);
+
+        isSpeedBoostActive = false;
         moveTimerMax *= SpeedMultiplier;
         Debug.Log("Speed Boost Dectivated");
     }
 
+    public bool checkShieldStatus()
+    { 
+        return isShieldActive;
+    }
+
+    public bool checkScoreMultiplierStatus()
+    {
+        return isScoreMultiplierActive;
+    }
+
+    public bool checkSpeedBoostStatus()
+    {
+        return isSpeedBoostActive;
+    }
 }

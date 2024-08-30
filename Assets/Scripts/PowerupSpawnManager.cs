@@ -38,7 +38,6 @@ public class PowerupSpawnManager : MonoBehaviour
 
     IEnumerator SpawnPowerup(float seconds)
     {
-        Debug.Log("Waiting for " + seconds + " seconds");
 
         yield return new WaitForSeconds(seconds);
 

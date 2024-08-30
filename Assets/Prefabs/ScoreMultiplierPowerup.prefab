@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -9048320665211196426}
   m_Layer: 0
   m_Name: ScoreMultiplierPowerup
-  m_TagString: Powerups
+  m_TagString: Powerup
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -124,3 +124,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 736e8853fdf071241bd7cbc4556fa74b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerupType: 0
