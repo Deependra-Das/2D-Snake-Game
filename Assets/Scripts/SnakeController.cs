@@ -32,6 +32,8 @@ public class SnakeController : MonoBehaviour
     [SerializeField]
     private GameUIManager gameUIManagerObject;
 
+    public BoxCollider2D SpawnArea;
+
     private void Awake()
     {
         //moveDirection=Vector2.right;
@@ -81,6 +83,34 @@ public class SnakeController : MonoBehaviour
 
             moveTimer = 0f;
         }
+        WrapSnakeInBounds();
+    }
+
+    protected void WrapSnakeInBounds()
+    {
+        Bounds bounds = SpawnArea.bounds;
+
+        Vector3 snakeHeadPosition = this.transform.position;
+
+        if (snakeHeadPosition.x > bounds.max.x)
+        {
+            snakeHeadPosition.x = bounds.min.x+1;
+        }
+        else if (snakeHeadPosition.x < bounds.min.x)
+        {
+            snakeHeadPosition.x = bounds.max.x-1;
+        }
+
+        if (snakeHeadPosition.y > bounds.max.y)
+        {
+            snakeHeadPosition.y = bounds.min.y;
+        }
+        else if (snakeHeadPosition.y < bounds.min.y)
+        {
+            snakeHeadPosition.y = bounds.max.y;
+        }
+
+        this.transform.position = snakeHeadPosition;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
