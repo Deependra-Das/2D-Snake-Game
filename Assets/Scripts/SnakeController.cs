@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor.EditorTools;
 using UnityEngine;
 
@@ -7,10 +8,23 @@ public class SnakeController : MonoBehaviour
 {
    
     private Vector2 moveDirection;
-    private float moveSpeed;
-    private float moveDistance;
     private float moveTimer;
     private float moveTimerMax;
+
+    [SerializeField]
+    private bool isShieldActive;
+
+    [SerializeField]
+    private bool isScoreMultiplierActive;
+
+    [SerializeField]
+    private bool isSpeedBoostActive;
+
+    [SerializeField]
+    private float powerupCooldownTimer;
+
+    [SerializeField]
+    private float SpeedMultiplier;
 
     private List<Transform> snakeSegmentList;
     public Transform snakeSegmentPrefab;
@@ -18,8 +32,6 @@ public class SnakeController : MonoBehaviour
     private void Awake()
     {
         //moveDirection=Vector2.right;
-        moveSpeed = 1.0f;
-        moveDistance = 1.0f;
         moveTimerMax = 0.1f;
     }
 
@@ -76,6 +88,17 @@ public class SnakeController : MonoBehaviour
 
             Destroy(other.gameObject);
         }
+        else if (other.gameObject.CompareTag("Powerup"))
+        {
+            HandleCollisionWithPowerup(other);
+
+            Destroy(other.gameObject);
+        }
+        else if (other.gameObject.CompareTag("Player") && isShieldActive==false)
+        {
+            Debug.Log("Player Dead");
+        }
+
     }
 
     private void HandleCollisionWithFood(Collider2D colliderFoodObject)
@@ -114,6 +137,56 @@ public class SnakeController : MonoBehaviour
         Destroy(lastBodyPart.gameObject);
         }
 
+    }
+
+    private void HandleCollisionWithPowerup(Collider2D colliderPowerupObject)
+    {
+        if (colliderPowerupObject.gameObject.GetComponent<PowerupController>() != null)
+        {
+            switch(colliderPowerupObject.gameObject.GetComponent<PowerupController>().getPowerupType())
+            {
+                case PowerupType.ScoreMultiplierPowerup:
+                    StartCoroutine(ActivateScoreMultiplier());
+                    break;
+                case PowerupType.ShieldPowerup:
+                    StartCoroutine(ActivateShield());
+                    break;
+                case PowerupType.SpeedBoostPowerup:
+                    StartCoroutine(ActivateSpeedBoost());
+                    break;
+            }
+        }
+
+    }
+
+    private IEnumerator ActivateShield()
+    {
+        isShieldActive = true;
+        Debug.Log("Shield Activated");
+        yield return new WaitForSeconds(powerupCooldownTimer);
+
+        isShieldActive = false;
+        Debug.Log("Shield Dectivated");
+    }
+
+    private IEnumerator ActivateScoreMultiplier()
+    {
+        isScoreMultiplierActive = true;
+        Debug.Log("Score Multiplier Activated");
+        yield return new WaitForSeconds(powerupCooldownTimer);
+
+        isScoreMultiplierActive = false;
+        Debug.Log("Score Multiplier Dectivated");
+    }
+   
+    private IEnumerator ActivateSpeedBoost()
+    {
+        isSpeedBoostActive = true;
+        moveTimerMax /= SpeedMultiplier;
+        Debug.Log("Speed Boost Activated");
+        yield return new WaitForSeconds(powerupCooldownTimer);
+        moveTimerMax *= SpeedMultiplier;
+        Debug.Log("Speed Boost Dectivated");
     }
 
 }
