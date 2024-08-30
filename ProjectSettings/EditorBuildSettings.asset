@@ -6,6 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
+    path: Assets/Scenes/LobbyScreen.unity
+    guid: e4cd1217bd3da8a4e8c95530928295c6
+  - enabled: 1
     path: Assets/Scenes/SinglePlayer.unity
     guid: 2cda990e2423bbf4892e6590ba056729
+  - enabled: 1
+    path: Assets/Scenes/CoOpMode.unity
+    guid: 1457fd02bcca0fd4baa5f72f1e9d405b
   m_configObjects: {}
