@@ -1017,12 +1017,12 @@ MonoBehaviour:
   foodList:
   - foodType: 0
     foodPrefab: {fileID: 5188033300378708304, guid: ac90dabf53461644c81a2a59550a8c1e, type: 3}
-    changeInLength: 0
-    pointsScored: 5
+    changeInLength: 5
+    pointsScored: -5
     foodLifeTime: 5
   - foodType: 1
     foodPrefab: {fileID: 5188033300378708304, guid: d2f7db3f166e8e044ab50534c5376f41, type: 3}
-    changeInLength: 0
+    changeInLength: 5
     pointsScored: 10
     foodLifeTime: 5
 --- !u!1 &1664090326
@@ -1408,6 +1408,10 @@ PrefabInstance:
       propertyPath: SpawnArea
       value: 
       objectReference: {fileID: 542024098}
+    - target: {fileID: 2595313767200074440, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
+      propertyPath: ScoreMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 2595313767200074440, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
       propertyPath: SpeedMultiplier
       value: 2
