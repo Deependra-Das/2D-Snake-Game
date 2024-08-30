@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
+using UnityEditor.EditorTools;
 using UnityEngine;
 
 public class FoodSpawnManager : MonoBehaviour
@@ -10,6 +12,24 @@ public class FoodSpawnManager : MonoBehaviour
     public int minSpawnTime = 2;
     public int maxSpawnTime = 5;
     public FoodItem[] foodList;
+
+
+    private static FoodSpawnManager instance;
+    public static FoodSpawnManager Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
 
     void Update()
     {
@@ -60,6 +80,7 @@ public class FoodSpawnManager : MonoBehaviour
         }
         return null;
     }
+
 
 }
 

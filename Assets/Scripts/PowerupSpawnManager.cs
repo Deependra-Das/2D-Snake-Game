@@ -11,6 +11,22 @@ public class PowerupSpawnManager : MonoBehaviour
     public int maxSpawnTime = 10;
     public PowerupItem[] powerupList;
 
+    private static PowerupSpawnManager instance;
+    public static PowerupSpawnManager Instance { get { return instance; } }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
     void Update()
     {
         if (!isSpawning)
@@ -51,7 +67,7 @@ public class PowerupSpawnManager : MonoBehaviour
         return new Vector3(Mathf.Round(xPos), Mathf.Round(yPos), 0.0f);
     }
 
-    private PowerupItem GetPowerupItem(PowerupType powerupType)
+    public PowerupItem GetPowerupItem(PowerupType powerupType)
     {
         PowerupItem item = Array.Find(powerupList, item => item.powerupType == powerupType);
         if (item != null)
