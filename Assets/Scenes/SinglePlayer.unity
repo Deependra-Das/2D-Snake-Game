@@ -341,7 +341,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.99, y: 0.99}
+  m_Size: {x: 0.99, y: 0.98}
   m_EdgeRadius: 0
 --- !u!4 &179160479
 Transform:
@@ -603,7 +603,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 25}
+  m_Size: {x: 48, y: 22}
   m_EdgeRadius: 0
 --- !u!4 &542024099
 Transform:
@@ -1841,7 +1841,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 25}
+  m_Size: {x: 48, y: 22}
   m_EdgeRadius: 0
 --- !u!114 &1608003657
 MonoBehaviour:
@@ -1861,12 +1861,12 @@ MonoBehaviour:
   foodList:
   - foodType: 0
     foodPrefab: {fileID: 5188033300378708304, guid: ac90dabf53461644c81a2a59550a8c1e, type: 3}
-    changeInLength: 1
+    changeInLength: 5
     pointsScored: -5
     foodLifeTime: 5
   - foodType: 1
     foodPrefab: {fileID: 5188033300378708304, guid: d2f7db3f166e8e044ab50534c5376f41, type: 3}
-    changeInLength: 1
+    changeInLength: 5
     pointsScored: 10
     foodLifeTime: 5
 --- !u!1 &1664090326
