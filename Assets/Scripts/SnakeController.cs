@@ -165,7 +165,13 @@ public class SnakeController : MonoBehaviour
         else if (other.gameObject.CompareTag("PlayerBody") && isShieldActive==false)
         {
             Debug.Log("Player Dead");
-            OnPlayerDeath(snakeID);
+            OnPlayerDeath(snakeID, false);
+
+        }
+        else if (other.gameObject.CompareTag("Player") && isShieldActive == false)
+        {
+            Debug.Log("Player Dead");
+            OnPlayerDeath(snakeID , true);
 
         }
 
@@ -207,8 +213,8 @@ public class SnakeController : MonoBehaviour
     {
         for (int i = 0; i < length; i++)
         {
-            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab);
-            newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
+            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab,new Vector3(-100f, -100f, 0f), new Quaternion(0f, 0f, 0f, 0f));
+           // newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
 
             snakeSegmentList.Add(newSnakeSegment);
         }
@@ -299,10 +305,10 @@ public class SnakeController : MonoBehaviour
         return isSpeedBoostActive;
     }
 
-    private void OnPlayerDeath(SnakeID snakeID)
+    private void OnPlayerDeath(SnakeID snakeID, bool headToHeadCollision)
     {
         AudioManager.Instance.PlaySFX(AudioTypeList.death);
-        gameOverObject.setWinnerScore(snakeID);
+        gameOverObject.SetWinnerScore(snakeID, headToHeadCollision);
         gameUIManagerObject.KillAllPlayers();
         gameOverPanel.gameObject.SetActive(true);
     }

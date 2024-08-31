@@ -435,7 +435,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 25}
+  m_Size: {x: 48, y: 22}
   m_EdgeRadius: 0
 --- !u!4 &542024099
 Transform:
@@ -757,6 +757,10 @@ PrefabInstance:
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 2595313767200074440, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
+      propertyPath: snakeSegmentPrefab
+      value: 
+      objectReference: {fileID: 8888684503696834313, guid: 3241c6a5dcc5e5f4da8b66d99a90f321, type: 3}
+    - target: {fileID: 2595313767200074440, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
       propertyPath: gameUIManagerObject
       value: 
       objectReference: {fileID: 26048101}
@@ -823,6 +827,18 @@ PrefabInstance:
     - target: {fileID: 2595313767200074442, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
       propertyPath: m_Name
       value: Snake_P2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595313767200074447, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
+      propertyPath: m_Color.b
+      value: 0.19607843
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595313767200074447, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
+      propertyPath: m_Color.g
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2595313767200074447, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
+      propertyPath: m_Color.r
+      value: 0.67058825
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1e875d567b5b87b468ca48c1518b6c1b, type: 3}
@@ -2295,7 +2311,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 50, y: 25}
+  m_Size: {x: 48, y: 22}
   m_EdgeRadius: 0
 --- !u!114 &1608003657
 MonoBehaviour:

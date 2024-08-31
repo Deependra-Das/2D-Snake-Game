@@ -31,7 +31,7 @@ public class GameOverUIController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void setWinnerScore(SnakeID snakeID)
+    public void SetWinnerScore(SnakeID snakeID, bool headToHeadCollision)
     {
         if (gameUIManagerObject.GetPlayerCount()==1)
         {
@@ -40,15 +40,36 @@ public class GameOverUIController : MonoBehaviour
 
         if (gameUIManagerObject.GetPlayerCount() == 2)
         {
-           if(snakeID==SnakeID.SNAKE_P1)
+            if(headToHeadCollision)
             {
-                WinnerScoreText.text = "Player 2 Won";
+                if(gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P1).scoreValue > gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P2).scoreValue)
+                {
+                    WinnerScoreText.text = "Player 1 Won";
+                }
+                else if (gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P1).scoreValue < gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P2).scoreValue)
+                {
+                    WinnerScoreText.text = "Player 2 Won";
+                }
+                else
+                {
+                    WinnerScoreText.text = "Its a Draw";
+                }
             }
-            else if (snakeID == SnakeID.SNAKE_P2)
+            else
             {
-                WinnerScoreText.text = "Player 1 Won";
+                if (snakeID == SnakeID.SNAKE_P1)
+                {
+                    WinnerScoreText.text = "Player 2 Won";
+                }
+                else if (snakeID == SnakeID.SNAKE_P2)
+                {
+                    WinnerScoreText.text = "Player 1 Won";
+                }
             }
+         
         }
 
     }
+
+
 }
