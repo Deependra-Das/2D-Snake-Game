@@ -16,6 +16,7 @@ public class LobbyController : MonoBehaviour
     {
         SinglePlayerButton.onClick.AddListener(OnSinglePlayerButtonClick);
         CoOpModeButton.onClick.AddListener(OnCoOpModeButtonClick);
+        QuitGameButton.onClick.AddListener(OnQuitGameButtonClick);
     }
 
     private void OnSinglePlayerButtonClick()
@@ -26,5 +27,10 @@ public class LobbyController : MonoBehaviour
     private void OnCoOpModeButtonClick()
     {
         SceneManager.LoadScene(2);
+    }
+
+    private void OnQuitGameButtonClick()
+    {
+        Application.Quit();
     }
 }
