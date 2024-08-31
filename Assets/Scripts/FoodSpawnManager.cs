@@ -14,21 +14,21 @@ public class FoodSpawnManager : MonoBehaviour
     public FoodItem[] foodList;
 
 
-    private static FoodSpawnManager instance;
-    public static FoodSpawnManager Instance { get { return instance; } }
+    //private static FoodSpawnManager instance;
+    //public static FoodSpawnManager Instance { get { return instance; } }
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
+    //private void Awake()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = this;
+    //        DontDestroyOnLoad(gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(gameObject);
+    //    }
+    //}
 
 
     void Update()

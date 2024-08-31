@@ -39,10 +39,23 @@ public class SnakeController : MonoBehaviour
 
     public BoxCollider2D SpawnArea;
 
+    [SerializeField]
+    private GameObject gameOverPanel;
+
+    [SerializeField]
+    private GameOverUIController gameOverObject;
+
+    [SerializeField]
+    private FoodSpawnManager foodSpawnManagerObject;
+
+    [SerializeField]
+    private PowerupSpawnManager powerupSpawnManagerObject;
+
     private void Awake()
     {
         //moveDirection=Vector2.right;
         moveTimerMax = 0.1f;
+        gameOverPanel.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -155,9 +168,11 @@ public class SnakeController : MonoBehaviour
 
             Destroy(other.gameObject);
         }
-        else if (other.gameObject.CompareTag("Player") && isShieldActive==false)
+        else if (other.gameObject.CompareTag("PlayerBody") && isShieldActive==false)
         {
             Debug.Log("Player Dead");
+            OnPlayerDeath(snakeID);
+
         }
 
     }
@@ -169,14 +184,14 @@ public class SnakeController : MonoBehaviour
             FoodItem foodItem;
             if(colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType()==FoodType.MassBurnerFood)
             {
-                foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassBurnerFood);
+                foodItem = foodSpawnManagerObject.GetFoodItem(FoodType.MassBurnerFood);
 
                 ReduceSnakeSize(foodItem.changeInLength);
                 gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored);
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
-                foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassGainerFood);
+                foodItem = foodSpawnManagerObject.GetFoodItem(FoodType.MassGainerFood);
 
                 GrowSnakeSize(foodItem.changeInLength);
 
@@ -199,7 +214,7 @@ public class SnakeController : MonoBehaviour
     {
         for (int i = 0; i < length; i++)
         {
-            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab);
+            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab, new Vector3(-100f, -100f, 0f), new Quaternion(0f, 0f, 0f, 0f));
             newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
 
             snakeSegmentList.Add(newSnakeSegment);
@@ -287,6 +302,14 @@ public class SnakeController : MonoBehaviour
     {
         return isSpeedBoostActive;
     }
+
+    private void OnPlayerDeath(SnakeID snakeID)
+    {
+        gameOverObject.setWinnerScore(snakeID);
+        gameUIManagerObject.KillAllPlayers();
+        gameOverPanel.gameObject.SetActive(true);
+    }
+
 }
 
 public enum SnakeID
