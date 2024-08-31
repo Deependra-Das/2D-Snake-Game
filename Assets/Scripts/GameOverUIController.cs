@@ -13,8 +13,9 @@ public class GameOverUIController : MonoBehaviour
     public GameUIManager gameUIManagerObject;
     public TextMeshProUGUI WinnerScoreText;
 
-    private void Start()
+    private void Awake()
     {
+        this.gameObject.SetActive(false);
         RestartButton.onClick.AddListener(OnRestartButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
     }
@@ -22,12 +23,14 @@ public class GameOverUIController : MonoBehaviour
     private void OnRestartButtonClick()
     {
         AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
     private void OnBackButtonClick()
     {
         AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
 
@@ -71,5 +74,11 @@ public class GameOverUIController : MonoBehaviour
 
     }
 
+    public void ActivateGameOverPanel(SnakeID snakeID, bool headToHeadCollision)
+    {
+        Time.timeScale = 0f;
+        SetWinnerScore(snakeID, headToHeadCollision);
+        this.gameObject.SetActive(true);
+    }
 
 }
