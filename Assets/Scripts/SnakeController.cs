@@ -40,16 +40,15 @@ public class SnakeController : MonoBehaviour
     public BoxCollider2D SpawnArea;
 
     [SerializeField]
-    private GameObject gameOverPanel;
+    private GameOverUIController gameOverObject;
 
     [SerializeField]
-    private GameOverUIController gameOverObject;
+    private GamePauseUIController gamePauseObject;
 
     private void Awake()
     {
         //moveDirection=Vector2.right;
         moveTimerMax = 0.1f;
-        gameOverPanel.gameObject.SetActive(false);
     }
 
     private void Start()
@@ -97,6 +96,11 @@ public class SnakeController : MonoBehaviour
             {
                 moveDirection = Vector2.right;
             }
+        }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            gamePauseObject.ActivateGamePausePanel();
         }
 
     }
@@ -308,9 +312,8 @@ public class SnakeController : MonoBehaviour
     private void OnPlayerDeath(SnakeID snakeID, bool headToHeadCollision)
     {
         AudioManager.Instance.PlaySFX(AudioTypeList.death);
-        gameOverObject.SetWinnerScore(snakeID, headToHeadCollision);
+        gameOverObject.ActivateGameOverPanel(snakeID, headToHeadCollision);
         gameUIManagerObject.KillAllPlayers();
-        gameOverPanel.gameObject.SetActive(true);
     }
 
 }
