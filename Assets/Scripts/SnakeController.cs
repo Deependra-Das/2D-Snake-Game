@@ -45,12 +45,6 @@ public class SnakeController : MonoBehaviour
     [SerializeField]
     private GameOverUIController gameOverObject;
 
-    [SerializeField]
-    private FoodSpawnManager foodSpawnManagerObject;
-
-    [SerializeField]
-    private PowerupSpawnManager powerupSpawnManagerObject;
-
     private void Awake()
     {
         //moveDirection=Vector2.right;
@@ -181,17 +175,16 @@ public class SnakeController : MonoBehaviour
     {
         if (colliderFoodObject.gameObject.GetComponent<FoodController>() != null)
         {
-            FoodItem foodItem;
             if(colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType()==FoodType.MassBurnerFood)
             {
-                foodItem = foodSpawnManagerObject.GetFoodItem(FoodType.MassBurnerFood);
+                FoodItem foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassBurnerFood);
 
                 ReduceSnakeSize(foodItem.changeInLength);
                 gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored);
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
-                foodItem = foodSpawnManagerObject.GetFoodItem(FoodType.MassGainerFood);
+                FoodItem foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassGainerFood);
 
                 GrowSnakeSize(foodItem.changeInLength);
 
@@ -212,13 +205,13 @@ public class SnakeController : MonoBehaviour
 
     private void GrowSnakeSize(int length)
     {
-        for (int i = 0; i < length; i++)
-        {
-            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab, new Vector3(-100f, -100f, 0f), new Quaternion(0f, 0f, 0f, 0f));
+        //for (int i = 0; i < length; i++)
+        //{
+            Transform newSnakeSegment = Instantiate(this.snakeSegmentPrefab);
             newSnakeSegment.position = snakeSegmentList[snakeSegmentList.Count - 1].position;
 
             snakeSegmentList.Add(newSnakeSegment);
-        }
+        //}
 
     }
 

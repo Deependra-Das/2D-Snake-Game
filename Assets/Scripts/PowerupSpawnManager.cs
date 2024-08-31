@@ -11,21 +11,21 @@ public class PowerupSpawnManager : MonoBehaviour
     public int maxSpawnTime = 10;
     public PowerupItem[] powerupList;
 
-    //private static PowerupSpawnManager instance;
-    //public static PowerupSpawnManager Instance { get { return instance; } }
+    private static PowerupSpawnManager instance;
+    public static PowerupSpawnManager Instance { get { return instance; } }
 
-    //private void Awake()
-    //{
-    //    if (instance == null)
-    //    {
-    //        instance = this;
-    //        DontDestroyOnLoad(gameObject);
-    //    }
-    //    else
-    //    {
-    //        Destroy(gameObject);
-    //    }
-    //}
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
     void Update()
     {
