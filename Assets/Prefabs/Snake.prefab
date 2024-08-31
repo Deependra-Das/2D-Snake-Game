@@ -76,12 +76,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: c50feca65b75dd3488753324eb94b184, type: 3}
-  m_Color: {r: 0, g: 0.6698113, b: 0.048517875, a: 1}
+  m_Sprite: {fileID: 21300000, guid: b01de9067230f304d98ce09ab0c1b54c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 2.56, y: 2.56}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -125,8 +125,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 1, y: 1}
+    oldSize: {x: 2.56, y: 2.56}
+    newSize: {x: 2.56, y: 2.56}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -146,4 +146,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e95b1376b30e4154a8e822481d6d96d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  snakeID: 0
+  isShieldActive: 0
+  isScoreMultiplierActive: 0
+  isSpeedBoostActive: 0
+  powerupCooldownTimer: 0
+  SpeedMultiplier: 0
+  ScoreMultiplier: 0
   snakeSegmentPrefab: {fileID: 8888684503696834313, guid: 28409109326877b4eb4533d069a1166d, type: 3}
+  gameUIManagerObject: {fileID: 0}
+  SpawnArea: {fileID: 0}
+  gameOverPanel: {fileID: 0}
+  gameOverObject: {fileID: 0}
