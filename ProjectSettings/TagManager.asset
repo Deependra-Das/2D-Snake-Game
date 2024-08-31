@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Food
   - Powerup
+  - PlayerBody
   layers:
   - Default
   - TransparentFX

@@ -6,41 +6,6 @@ using UnityEngine;
 
 public class GameUIManager : MonoBehaviour
 {
-    /*
-    private int scoreValue = 0;
-
-    [SerializeField]
-    private TextMeshProUGUI scoreText;
-
-    public SnakeController snakeController;
-
-    public CanvasRenderer[] ActivePowerupImageList;
-
-    public void UpdateScore(int scoreIncrementValue)
-    {
-        scoreValue += scoreIncrementValue;
-        RefreshUI();
-    }
-
-    private void RefreshUI()
-    {
-        scoreText.text = "Score: " + scoreValue.ToString();
-
-    }
-
-    private void Update()
-    {
-        UpadateActivePowerup();
-    }
-
-    public void UpadateActivePowerup()
-    {
-        ActivePowerupImageList[0].gameObject.SetActive(snakeController.checkShieldStatus());
-        ActivePowerupImageList[1].gameObject.SetActive(snakeController.checkScoreMultiplierStatus());
-        ActivePowerupImageList[2].gameObject.SetActive(snakeController.checkSpeedBoostStatus());
-            
-    }*/
-
     public PlayerScoreItem[] playerScores;
 
     public void UpdateScore(SnakeID snakeID, int scoreIncrementValue)
@@ -89,6 +54,21 @@ public class GameUIManager : MonoBehaviour
         }
         return null;
     }
+
+    public int GetPlayerCount()
+    {
+        return playerScores.Length;
+    }
+
+    public void KillAllPlayers()
+    {
+        for (int i = 0; i < playerScores.Length; i++)
+        {
+           playerScores[i].snakePrefab.enabled = false;
+        }
+    }
+
+
 }
 
 
