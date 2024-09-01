@@ -10,12 +10,11 @@ public class GameOverUIController : MonoBehaviour
     public Button RestartButton;
     public Button BackButton;
 
-    public GameUIManager gameUIManagerObject;
-    public TextMeshProUGUI WinnerScoreText;
+    public GameManager gameManagerObject;
+    public TextMeshProUGUI[] ScoreTextList;
 
     private void Awake()
     {
-        this.gameObject.SetActive(false);
         RestartButton.onClick.AddListener(OnRestartButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
     }
@@ -36,49 +35,62 @@ public class GameOverUIController : MonoBehaviour
 
     public void SetWinnerScore(SnakeID snakeID, bool headToHeadCollision)
     {
-        if (gameUIManagerObject.GetPlayerCount()==1)
+        if (gameManagerObject.GetPlayerCount()==1)
         {
-          WinnerScoreText.text="Your Score : "+gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P1).scoreValue;
+            ScoreTextList[0].text="Your Score : "+ gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+            ScoreTextList[1].text = "";
+            HighScoreManager.Instance.SetHighestScore("SinglePlayer", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue);
+            ScoreTextList[2].text = "SinglePlayer HighScore : " + HighScoreManager.Instance.GetHighestScore("SinglePlayer").ToString();
         }
 
-        if (gameUIManagerObject.GetPlayerCount() == 2)
+        if (gameManagerObject.GetPlayerCount() == 2)
         {
             if(headToHeadCollision)
             {
-                if(gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P1).scoreValue > gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P2).scoreValue)
+                if(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue > gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue)
                 {
-                    WinnerScoreText.text = "Player 1 Won";
+                    ScoreTextList[0].text = "Player 1 Won with Score: "+ gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+                    ScoreTextList[1].text = "Player 2 Lost with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue;
+                    HighScoreManager.Instance.SetHighestScore("CoOpMode", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue);
+           
+                  
                 }
-                else if (gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P1).scoreValue < gameUIManagerObject.GetPowerupItem(SnakeID.SNAKE_P2).scoreValue)
+                else if (gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue < gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue)
                 {
-                    WinnerScoreText.text = "Player 2 Won";
+                    ScoreTextList[0].text = "Player 2 Won with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue;
+                    ScoreTextList[1].text = "Player 1 Lost with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+                    HighScoreManager.Instance.SetHighestScore("CoOpMode", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue);
+                   
                 }
                 else
                 {
-                    WinnerScoreText.text = "Its a Draw";
+                    ScoreTextList[0].text = "Its a Draw with Score : " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+                    ScoreTextList[1].text = "";
+                    HighScoreManager.Instance.SetHighestScore("CoOpMode", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue);
                 }
             }
             else
             {
                 if (snakeID == SnakeID.SNAKE_P1)
                 {
-                    WinnerScoreText.text = "Player 2 Won";
+                    ScoreTextList[0].text = "Player 2 Won with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue;
+                    ScoreTextList[1].text = "Player 1 Lost with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+                    HighScoreManager.Instance.SetHighestScore("CoOpMode", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue);
+
                 }
                 else if (snakeID == SnakeID.SNAKE_P2)
                 {
-                    WinnerScoreText.text = "Player 1 Won";
+                    ScoreTextList[0].text = "Player 1 Won with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue;
+                    ScoreTextList[1].text = "Player 2 Lost with Score: " + gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).scoreValue;
+                    HighScoreManager.Instance.SetHighestScore("CoOpMode", gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).scoreValue);
+
                 }
             }
-         
+
+            ScoreTextList[2].text = "Co-Op Mode HighScore : " + HighScoreManager.Instance.GetHighestScore("CoOpMode").ToString();
+
         }
 
-    }
-
-    public void ActivateGameOverPanel(SnakeID snakeID, bool headToHeadCollision)
-    {
-        Time.timeScale = 0f;
-        SetWinnerScore(snakeID, headToHeadCollision);
-        this.gameObject.SetActive(true);
     }
 
 }

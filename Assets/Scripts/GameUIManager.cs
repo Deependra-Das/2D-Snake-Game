@@ -6,17 +6,17 @@ using UnityEngine;
 
 public class GameUIManager : MonoBehaviour
 {
-    public PlayerScoreItem[] playerScores;
-
+    [SerializeField]
+    private GameManager gameManagerObject;
     public void UpdateScore(SnakeID snakeID, int scoreIncrementValue)
     {
-        PlayerScoreItem scoreItem = GetPowerupItem(snakeID);
+        PlayerItem scoreItem = gameManagerObject.GetPlayerItem(snakeID);
 
         scoreItem.scoreValue += scoreIncrementValue;
         RefreshUI(scoreItem);
     }
 
-    private void RefreshUI(PlayerScoreItem scoreItem)
+    private void RefreshUI(PlayerItem scoreItem)
     {
         if (scoreItem.snakeID == SnakeID.SNAKE_P1)
         {
@@ -36,50 +36,36 @@ public class GameUIManager : MonoBehaviour
 
     public void UpadateActivePowerup()
     {
-        for (int i = 0; i < playerScores.Length; i++)
+        switch (gameManagerObject.GetPlayerCount())
         {
-            playerScores[i].ActivePowerupImageList[0].gameObject.SetActive(playerScores[i].snakePrefab.checkShieldStatus());
-            playerScores[i].ActivePowerupImageList[1].gameObject.SetActive(playerScores[i].snakePrefab.checkScoreMultiplierStatus());
-            playerScores[i].ActivePowerupImageList[2].gameObject.SetActive(playerScores[i].snakePrefab.checkSpeedBoostStatus());
-        }
+            case 1:
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[0].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkShieldStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[1].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkScoreMultiplierStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[2].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkSpeedBoostStatus());
+                break;
 
-    }
+            case 2:
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[0].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkShieldStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[1].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkScoreMultiplierStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).ActivePowerupImageList[2].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P1).snakePrefab.checkSpeedBoostStatus());
 
-    public PlayerScoreItem GetPowerupItem(SnakeID snakeID)
-    {
-        PlayerScoreItem item = Array.Find(playerScores, item => item.snakeID == snakeID);
-        if (item != null)
-        {
-            return item;
-        }
-        return null;
-    }
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).ActivePowerupImageList[0].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).snakePrefab.checkShieldStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).ActivePowerupImageList[1].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).snakePrefab.checkScoreMultiplierStatus());
+                gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).ActivePowerupImageList[2].gameObject.SetActive(gameManagerObject.GetPlayerItem(SnakeID.SNAKE_P2).snakePrefab.checkSpeedBoostStatus());
+                break;
 
-    public int GetPlayerCount()
-    {
-        return playerScores.Length;
-    }
-
-    public void KillAllPlayers()
-    {
-        for (int i = 0; i < playerScores.Length; i++)
-        {
-           playerScores[i].snakePrefab.enabled = false;
         }
     }
 
+    public void SetScoreToZero(SnakeID snakeID)
+    {
+        PlayerItem scoreItem = gameManagerObject.GetPlayerItem(snakeID);
 
-}
+        scoreItem.scoreValue = 0;
+        RefreshUI(scoreItem);
+    }
 
 
-[Serializable]
-public class PlayerScoreItem
-{
-    public SnakeID snakeID;
-    public SnakeController snakePrefab;
-    public int scoreValue = 0;
-    public TextMeshProUGUI scoreText;
-    public CanvasRenderer[] ActivePowerupImageList;
 }
 
 

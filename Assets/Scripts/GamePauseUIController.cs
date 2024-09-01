@@ -10,12 +10,13 @@ public class GamePauseUIController : MonoBehaviour
 {
     public Button ResumeButton;
     public Button BackButton;
-
+    public TextMeshProUGUI HighScoreText;
+    public GameManager gameManagerObject;
     private void Awake()
     {
-        this.gameObject.SetActive(false);
         ResumeButton.onClick.AddListener(OnResumeButtonClick);
         BackButton.onClick.AddListener(OnBackButtonClick);
+        RefreshHighScore();
     }
 
     private void OnResumeButtonClick()
@@ -32,11 +33,20 @@ public class GamePauseUIController : MonoBehaviour
         SceneManager.LoadScene(0);
     }
 
-    public void ActivateGamePausePanel()
+    public void RefreshHighScore()
     {
-        Time.timeScale = 0f;
-        this.gameObject.SetActive(true);
-    }
+        switch (gameManagerObject.GetPlayerCount())
+        {
+            case 1:
+                HighScoreText.text = "SinglePlayer HighScore : " +HighScoreManager.Instance.GetHighestScore("SinglePlayer").ToString();
+                break;
 
+            case 2:
+                HighScoreText.text = "Co-Op Mode HighScore : " + HighScoreManager.Instance.GetHighestScore("CoOpMode").ToString();
+                break;
+
+        }
+
+    }
 
 }
