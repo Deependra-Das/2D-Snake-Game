@@ -18,25 +18,26 @@ public class LobbyController : MonoBehaviour
         SinglePlayerButton.onClick.AddListener(OnSinglePlayerButtonClick);
         CoOpModeButton.onClick.AddListener(OnCoOpModeButtonClick);
         QuitGameButton.onClick.AddListener(OnQuitGameButtonClick);
+        AudioManager.Instance.MuteAudioSource(AudioSourceList.audioSourceBGM, false);
         AudioManager.Instance.PlayBGM(AudioTypeList.backgroundMusic);
         RefreshHighScore();
     }
 
     private void OnSinglePlayerButtonClick()
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.buttonMenuClick);
         SceneManager.LoadScene(1);
     }
 
     private void OnCoOpModeButtonClick()
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.buttonMenuClick);
         SceneManager.LoadScene(2);
     }
 
     private void OnQuitGameButtonClick()
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.buttonMenuClick);
         Application.Quit();
     }
     public void RefreshHighScore()

@@ -205,14 +205,14 @@ public class SnakeController : MonoBehaviour
         {
             if(colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType()==FoodType.MassBurnerFood)
             {
-                AudioManager.Instance.PlaySFX(AudioTypeList.massBurnerFoodEaten);
+                AudioManager.Instance.PlayFoodSFX(AudioTypeList.massBurnerFoodEaten);
                 FoodItem foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassBurnerFood);
                 ReduceSnakeSize(foodItem.changeInLength);
                 gameUIManagerObject.UpdateScore(snakeID, foodItem.pointsScored);
             }
             else if (colliderFoodObject.gameObject.GetComponent<FoodController>().getFoodType() == FoodType.MassGainerFood)
             {
-                AudioManager.Instance.PlaySFX(AudioTypeList.massGainerFoodEaten);
+                AudioManager.Instance.PlayFoodSFX(AudioTypeList.massGainerFoodEaten);
                 FoodItem foodItem = FoodSpawnManager.Instance.GetFoodItem(FoodType.MassGainerFood);
                 GrowSnakeSize(foodItem.changeInLength);
 
@@ -280,10 +280,10 @@ public class SnakeController : MonoBehaviour
     private IEnumerator ActivateShield()
     {
         isShieldActive = true;
-        AudioManager.Instance.PlaySFX(AudioTypeList.shieldActivated);
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerUpActivated);
         Debug.Log("Shield Activated");
         yield return new WaitForSeconds(powerupCooldownTimer);
-
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerupDeactivated);
         isShieldActive = false;
         Debug.Log("Shield Dectivated");
     }
@@ -291,10 +291,10 @@ public class SnakeController : MonoBehaviour
     private IEnumerator ActivateScoreMultiplier()
     {
         isScoreMultiplierActive = true;
-        AudioManager.Instance.PlaySFX(AudioTypeList.scoreMultiplierActivated);
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerUpActivated);
         Debug.Log("Score Multiplier Activated");
         yield return new WaitForSeconds(powerupCooldownTimer);
-
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerupDeactivated);
         isScoreMultiplierActive = false;
         Debug.Log("Score Multiplier Dectivated");
     }
@@ -303,10 +303,10 @@ public class SnakeController : MonoBehaviour
     {
         isSpeedBoostActive = true;
         moveTimerMax /= SpeedMultiplier;
-        AudioManager.Instance.PlaySFX(AudioTypeList.speedBoostActivated);
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerUpActivated);
         Debug.Log("Speed Boost Activated");
         yield return new WaitForSeconds(powerupCooldownTimer);
-
+        AudioManager.Instance.PlayPowerupSFX(AudioTypeList.powerupDeactivated);
         isSpeedBoostActive = false;
         moveTimerMax *= SpeedMultiplier;
         Debug.Log("Speed Boost Dectivated");
@@ -329,7 +329,8 @@ public class SnakeController : MonoBehaviour
 
     private void OnPlayerDeath(SnakeID snakeID, bool headToHeadCollision)
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.death);
+        AudioManager.Instance.MuteAudioSource(AudioSourceList.audioSourceBGM, true);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.death);
         gameOverPanel.SetActive(true);
         gameOverObject.SetWinnerScore(snakeID, headToHeadCollision);
         Time.timeScale = 0f;

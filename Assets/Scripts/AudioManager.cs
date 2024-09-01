@@ -8,8 +8,11 @@ public class AudioManager : MonoBehaviour
     private static AudioManager instance;
     public static AudioManager Instance { get { return instance; } }
 
-    public AudioSource audioSourceSFX;
+    public AudioSource audioSourceMenuSFX;
     public AudioSource audioSourceBGM;
+    public AudioSource audioSourcePowerupSFX;
+    public AudioSource audioSourceFoodSFX;
+
     public AudioType[] AudioList;
 
     private void Awake()
@@ -29,23 +32,31 @@ public class AudioManager : MonoBehaviour
     {
         switch (sourceName)
         {
-            case AudioSourceList.audioSourceSFX:
-                audioSourceSFX.mute = value;
+            case AudioSourceList.audioSourceMenuSFX:
+                audioSourceMenuSFX.mute = value;
                 break;
 
             case AudioSourceList.audioSourceBGM:
                 audioSourceBGM.mute = value;
                 break;
 
+            case AudioSourceList.audioSourcePowerupSFX:
+                audioSourcePowerupSFX.mute = value;
+                break;
+
+            case AudioSourceList.audioSourceFoodSFX:
+                audioSourceFoodSFX.mute = value;
+                break;
+
         }
     }
 
-    public void PlaySFX(AudioTypeList audio)
+    public void PlayMenuSFX(AudioTypeList audio)
     {
         AudioClip clip = GetAudioClip(audio);
         if (clip != null)
         {
-            audioSourceSFX.PlayOneShot(clip);
+            audioSourceMenuSFX.PlayOneShot(clip);
         }
         else
         {
@@ -60,6 +71,32 @@ public class AudioManager : MonoBehaviour
         {
             audioSourceBGM.clip = clip;
             audioSourceBGM.Play();
+        }
+        else
+        {
+            Debug.LogError("Audio Clip not found for " + audio);
+        }
+    }
+
+    public void PlayPowerupSFX(AudioTypeList audio)
+    {
+        AudioClip clip = GetAudioClip(audio);
+        if (clip != null)
+        {
+            audioSourcePowerupSFX.PlayOneShot(clip);
+        }
+        else
+        {
+            Debug.LogError("Audio Clip not found for " + audio);
+        }
+    }
+
+    public void PlayFoodSFX(AudioTypeList audio)
+    {
+        AudioClip clip = GetAudioClip(audio);
+        if (clip != null)
+        {
+            audioSourceFoodSFX.PlayOneShot(clip);
         }
         else
         {
@@ -85,9 +122,8 @@ public enum AudioTypeList
     buttonMenuClick,
     massGainerFoodEaten,
     massBurnerFoodEaten,
-    scoreMultiplierActivated,
-    speedBoostActivated,
-    shieldActivated,
+    powerUpActivated,
+    powerupDeactivated,
     death,
 }
 
@@ -100,7 +136,10 @@ public class AudioType
 
 public enum AudioSourceList
 {
-    audioSourceSFX,
+    audioSourceMenuSFX,
     audioSourceBGM,
+    audioSourcePowerupSFX,
+    audioSourceFoodSFX
+
 }
 

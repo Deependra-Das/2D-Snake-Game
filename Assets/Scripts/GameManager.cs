@@ -18,6 +18,12 @@ public class GameManager : MonoBehaviour
         return null;
     }
 
+    private void Start()
+    {
+        AudioManager.Instance.MuteAudioSource(AudioSourceList.audioSourceBGM, false);
+        AudioManager.Instance.PlayBGM(AudioTypeList.backgroundMusic);
+    }
+
     public int GetPlayerCount()
     {
         return playerList.Length;

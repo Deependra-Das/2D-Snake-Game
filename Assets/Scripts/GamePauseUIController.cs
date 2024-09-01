@@ -21,14 +21,14 @@ public class GamePauseUIController : MonoBehaviour
 
     private void OnResumeButtonClick()
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.buttonMenuClick);
         this.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
 
     private void OnBackButtonClick()
     {
-        AudioManager.Instance.PlaySFX(AudioTypeList.buttonMenuClick);
+        AudioManager.Instance.PlayMenuSFX(AudioTypeList.buttonMenuClick);
         Time.timeScale = 1f;
         SceneManager.LoadScene(0);
     }
