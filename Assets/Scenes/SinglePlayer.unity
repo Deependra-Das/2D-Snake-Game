@@ -2302,12 +2302,12 @@ MonoBehaviour:
   foodList:
   - foodType: 0
     foodPrefab: {fileID: 5188033300378708304, guid: ac90dabf53461644c81a2a59550a8c1e, type: 3}
-    changeInLength: 5
+    changeInLength: 1
     pointsScored: -5
     foodLifeTime: 5
   - foodType: 1
     foodPrefab: {fileID: 5188033300378708304, guid: d2f7db3f166e8e044ab50534c5376f41, type: 3}
-    changeInLength: 5
+    changeInLength: 1
     pointsScored: 10
     foodLifeTime: 5
 --- !u!1 &1664090326
