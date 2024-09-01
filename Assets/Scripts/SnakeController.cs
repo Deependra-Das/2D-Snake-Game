@@ -45,10 +45,21 @@ public class SnakeController : MonoBehaviour
     [SerializeField]
     private GamePauseUIController gamePauseObject;
 
+    [SerializeField]
+    private GameManager gameManagerObject;
+
+    [SerializeField]
+    private GameObject gameOverPanel;
+
+    [SerializeField]
+    private GameObject gamePausePanel;
+
     private void Awake()
     {
         //moveDirection=Vector2.right;
         moveTimerMax = 0.1f;
+        gameOverPanel.SetActive(false);
+        gamePausePanel.SetActive(false);
     }
 
     private void Start()
@@ -100,7 +111,9 @@ public class SnakeController : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            gamePauseObject.ActivateGamePausePanel();
+            gamePausePanel.SetActive(true);
+            Time.timeScale = 0f;
+            gamePauseObject.RefreshHighScore();
         }
 
     }
@@ -169,6 +182,11 @@ public class SnakeController : MonoBehaviour
         else if (other.gameObject.CompareTag("PlayerBody") && isShieldActive==false)
         {
             Debug.Log("Player Dead");
+            if(gameManagerObject.GetPlayerCount() == 2)
+            {
+                gameUIManagerObject.SetScoreToZero(snakeID);
+            }
+
             OnPlayerDeath(snakeID, false);
 
         }
@@ -312,14 +330,10 @@ public class SnakeController : MonoBehaviour
     private void OnPlayerDeath(SnakeID snakeID, bool headToHeadCollision)
     {
         AudioManager.Instance.PlaySFX(AudioTypeList.death);
-        gameOverObject.ActivateGameOverPanel(snakeID, headToHeadCollision);
-        gameUIManagerObject.KillAllPlayers();
+        gameOverPanel.SetActive(true);
+        gameOverObject.SetWinnerScore(snakeID, headToHeadCollision);
+        Time.timeScale = 0f;
+        gameManagerObject.KillAllPlayers();
     }
 
-}
-
-public enum SnakeID
-{
-    SNAKE_P1,
-    SNAKE_P2
 }
